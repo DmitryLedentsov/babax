@@ -1,0 +1,13 @@
+{
+    "makefile.extensionOutputFolder": "./.vscode",
+    "files.associations": {
+        "sdl.h": "c"
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "c:\\Users\\leden\\OneDrive\\C++\\sdl_test",
+            "binaryPath": "c:\\Users\\leden\\OneDrive\\C++\\sdl_test\\main",
+            "binaryArgs": []
+        }
+    ]
+}
