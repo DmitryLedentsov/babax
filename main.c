@@ -63,10 +63,21 @@ struct body* new_body(struct vec pos, int n, struct vec vertices[]){
 void update_body(struct body* body){
     body->position = add(body->position, body->velocity);
     body->angle += body->rot_velocity;
+
+    struct vec origin = body->position;
+    float angle = body->angle;
+
     //struct vec* p = body->shape.transformed_vertices;
     //struct vec* transformed = body->shape.transformed_vertices;
     for(int i=0;i<body->shape.n;i++){
-        body->shape.transformed_vertices[i] = add(body->position, body->shape.vertices[i]);
+        //body->shape.transformed_vertices[i] = add(body->position, body->shape.vertices[i]);
+        struct vec point = body->shape.vertices[i];
+        float X = origin.x + ((point.x - origin.x) * cos(angle) -
+		(point.y - origin.y) * sin(angle));
+	    float Y = origin.y +  ((point.x - origin.x) * sin(angle) +
+		(point.y - origin.y) * cos(angle));
+	
+        body->shape.transformed_vertices[i] = {X,Y};
     }
 };
 
@@ -155,6 +166,8 @@ int main (int argc, char ** args) {
         new_body({100,100},3,vertices)
     };
     bodies[0]->velocity={1,1};
+    bodies[0]->rot_velocity=0.01f;
+    bodies[1]->velocity = {-1,-1};
     struct body* body = new_body({1,1}, 3, vertices);
 
     struct vec transformed[]= {
@@ -164,17 +177,6 @@ int main (int argc, char ** args) {
     };
 
     struct body** p = bodies;
-    /*
-    *p = new_body({200,200}, {vertices,3});
-    p++;*/
-    //update_all(bodies,N);
-    
-    /*for(int i=0; i<N;i++){
-        *p = new_body();
-        (*p)->shape.vertices = vertices;
-
-        p++;
-    }*/
 
     while (1)
     {
