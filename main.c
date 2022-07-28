@@ -45,7 +45,7 @@ struct body{
     float mass;
     struct vec velocity;
     float rot_velocity;
-    float angle;
+    float angle = 0;
 };
 
 struct body* new_body(struct vec pos, int n, struct vec vertices[]){
@@ -61,7 +61,7 @@ struct body* new_body(struct vec pos, int n, struct vec vertices[]){
 
 
 void update_body(struct body* body){
-    body->position = add(body->position, body->velocity);
+    //body->position = add(body->position, body->velocity);
     body->angle += body->rot_velocity;
 
     struct vec origin = body->position;
