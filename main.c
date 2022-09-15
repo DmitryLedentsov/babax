@@ -48,6 +48,15 @@ struct body{
     float angle;
 };
 
+struct result{
+    //TODO: aaa
+};
+
+struct result process_collision(struct body* b1, struct body* b2){
+    //TODO:
+}
+
+
 struct body* new_body(struct vec pos, int n, struct vec vertices[]){
     struct body* body = (struct body*)malloc(sizeof(struct body));
     for(int i=0; i<n; i++){
@@ -167,13 +176,6 @@ int main (int argc, char ** args) {
     bodies[0]->velocity=(struct vec){0,0};
     bodies[0]->rot_velocity=0.01f;
     bodies[1]->velocity = (struct vec){0,-0.01f};
-    //struct body* body = new_body((struct vec){1,1}, 3, vertices);
-/*
-    struct vec transformed[]= {
-        {100,100},
-        {130,110},
-        {150,150}
-    };*/
 
     struct body** p = bodies;
 
