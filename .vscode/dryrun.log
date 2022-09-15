@@ -1,5 +1,5 @@
-make.exe all --dry-run --always-make --keep-going --print-directory
+make.exe all --dry-run --keep-going --print-directory
 make: Entering directory '/cygdrive/c/Users/leden/OneDrive/C++/sdl_test'
-g++ -I src/Include -L src/lib -o main main.c -lmingw32 -lSDL2main -lSDL2
+gcc -g -I src/Include -L src/lib -o main main.c -lmingw32 -lSDL2main -lSDL2
 make: Leaving directory '/cygdrive/c/Users/leden/OneDrive/C++/sdl_test'
  
