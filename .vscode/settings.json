@@ -1,7 +1,8 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
-        "sdl.h": "c"
+        "sdl.h": "c",
+        "dimka_physx.h": "c"
     },
     "makefile.launchConfigurations": [
         {

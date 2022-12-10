@@ -1,5 +1,6 @@
 make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # GNU Make 4.3
+ 
 # Built for x86_64-pc-cygwin
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -7,15 +8,17 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Thu Sep 15 22:49:07 2022
- 
+# Make data base, printed on Sun Dec 11 01:18:07 2022
 
 # Variables
 
+ 
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
-JAVA_HOME = C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\
+JAVA_HOME = C:\Program Files\Eclipse Adoptium\jdk-17.0.5.8-hotspot
 # environment
 LC_ALL = C
 # environment
@@ -25,7 +28,7 @@ VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
 # environment
 LOCALAPPDATA = C:\Users\leden\AppData\Local
 # environment
-VSCODE_CWD = C:\Users\leden\OneDrive\C++
+VSCODE_CWD = C:\Windows\system32
 # environment
 SYSTEMROOT = C:\Windows
 # environment
@@ -37,7 +40,9 @@ MAKE_COMMAND := make
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_716_DJPHUQGSKEMWJSNQ
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\LOCAL\crashpad_51184_GGJPRNSNUUXBNKZK
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -49,7 +54,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\leden\AppData\Roaming\Code\CachedData\784b0177c56c607789f9638da7b6bf3230d47a8c
+VSCODE_CODE_CACHE_PATH = C:\Users\leden\AppData\Roaming\Code\CachedData\5235c6bb189b60b01b1f49062f4ffa42384f8c91
 # environment
 LANG = C
 # default
@@ -87,15 +92,19 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 716
+GRAALVM_HOME = C:\graalvm
+# environment
+VSCODE_PID = 51184
 # environment
 CLION = C:\Program Files\JetBrains\CLion 2021.2.2\bin;
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 *F = $(notdir $*)
+ 
 # environment
 CMAKE = C:\Program Files\CMake\bin\cmake.exe
+ 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -125,8 +134,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /cygdrive/c/Program Files/Eclipse Adoptium/jdk-17.0.3.7-hotspot/bin:/cygdrive/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/cygdrive/c/Program Files/Eclipse Foundation/jdk-11.0.12.7-hotspot/bin:/cygdrive/c/Program Files/Python39/Scripts:/cygdrive/c/Program Files/Python39:/cygdrive/c/Windows/system32:/cygdrive/c/Windows:/cygdrive/c/Windows/System32/Wbem:/cygdrive/c/Windows/System32/WindowsPowerShell/v1.0:/cygdrive/c/Windows/System32/OpenSSH:/cygdrive/c/Program Files/Java/jdk1.8.0_301/bin:/cygdrive/c/Program Files/PuTTY:/cygdrive/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/cygdrive/c/texlive/2021/bin/Win32:/cygdrive/c/Gradle/gradle-7.3.3/bin:/cygdrive/c/Program Files/Git/cmd:/cygdrive/c/MinGW/bin:/cygdrive/c/php:/cygdrive/c/nasm:/cygdrive/c/Users/leden/.cargo/bin:/cygdrive/c/Users/leden/AppData/Local/Microsoft/WindowsApps:/cygdrive/c/Users/leden/AppData/Local/Programs/Microsoft VS Code/bin:/usr/bin:/cygdrive/c/Program Files/JetBrains/CLion 2021.2.2/bin:/cygdrive/c/Users/leden/AppData/Local/GitHubDesktop/bin:/cygdrive/c/texlive/2021/bin/win32:/cygdrive/c/Program Files/JetBrains/IntelliJ IDEA 2021.2.3/bin
- 
+PATH = /cygdrive/c/ODB/bin:/cygdrive/c/Program Files/Eclipse Adoptium/jdk-17.0.5.8-hotspot/bin:/cygdrive/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/cygdrive/c/Program Files/Eclipse Foundation/jdk-11.0.12.7-hotspot/bin:/cygdrive/c/Program Files/Python39/Scripts:/cygdrive/c/Program Files/Python39:/cygdrive/c/Windows/system32:/cygdrive/c/Windows:/cygdrive/c/Windows/System32/Wbem:/cygdrive/c/Windows/System32/WindowsPowerShell/v1.0:/cygdrive/c/Windows/System32/OpenSSH:/cygdrive/c/Program Files/Java/jdk1.8.0_301/bin:/cygdrive/c/Program Files/PuTTY:/cygdrive/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/cygdrive/c/texlive/2021/bin/Win32:/cygdrive/c/Gradle/gradle-7.3.3/bin:/cygdrive/c/Program Files/Git/cmd:/cygdrive/c/MinGW/bin:/cygdrive/c/php:/cygdrive/c/nasm:/cygdrive/c/Program Files/CMake/bin:/cygdrive/c/Program Files/nodejs:/cygdrive/c/Users/leden/.cargo/bin:/cygdrive/c/Users/leden/AppData/Local/Microsoft/WindowsApps:/cygdrive/c/Users/leden/AppData/Local/Programs/Microsoft VS Code/bin:/usr/bin:/cygdrive/c/Program Files/JetBrains/CLion 2021.2.2/bin:/cygdrive/c/Users/leden/AppData/Local/GitHubDesktop/bin:/cygdrive/c/texlive/2021/bin/win32:/cygdrive/c/Program Files/JetBrains/IntelliJ IDEA 2021.2.3/bin:/cygdrive/c/Users/leden/AppData/Roaming/npm:/cygdrive/c/graalvm/bin:/cygdrive/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.16.27023/bin/HostX64/x64/1049:/cygdrive/c/apache-maven-3.8.6/bin
 # environment
 ZES_ENABLE_SYSMAN = 1
 # environment
@@ -194,7 +202,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = /cygdrive/c/Users/leden/AppData/Local/Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\c894135aeaf74602391a0ea81169cd32-1.71.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\c894135aeaf74602391a0ea81169cd32-1.74.0-main-sock
 # environment
 TERM = xterm-256color
 # default
@@ -214,9 +222,11 @@ PROCESSOR_REVISION = 8c01
 # environment
 LC_MESSAGES = English
 # environment
+WIX = C:\Program Files (x86)\WiX Toolset v3.11\
+# environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 # variable set hash-table stats:
-# Load=101/1024=10%, Rehash=0, Collisions=12/131=9%
+# Load=105/1024=10%, Rehash=0, Collisions=13/135=10%
 
 # Pattern-specific Variable Values
 
@@ -224,9 +234,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 
 # Directories
 
-# . (device 2831518929, inode 5910974511172655): 15 files, no impossibilities.
+# . (device 2831518929, inode 5910974511172655): 19 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 19 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -234,10 +244,11 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 
 # Files
 
+ 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-15 22:49:06.4020536
+#  Last modified 2022-12-07 19:05:22.9397828
 #  File has been updated.
 #  Successfully updated.
 
@@ -273,7 +284,7 @@ all:
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'Makefile', line 3):
-	gcc -g -I SDL2/include -L SDL2/lib -o main main.c -lmingw32 -lSDL2main -lSDL2
+	gcc  -g -I SDL2/include -L SDL2/lib -o main main.c -lmingw32 -lSDL2main -lSDL2
 
 # Not a target:
 .SUFFIXES:
@@ -289,12 +300,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 19 / storage = 137 B / avg = 7 B
-# current buf: size = 8162 B / used = 137 B / count = 19 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 23 / storage = 181 B / avg = 7 B
+# current buf: size = 8162 B / used = 181 B / count = 23 / avg = 7 B
 
-# strcache performance: lookups = 26 / hit rate = 26%
+# strcache performance: lookups = 30 / hit rate = 23%
 # hash-table stats:
-# Load=19/8192=0%, Rehash=0, Collisions=0/26=0%
-# Finished Make data base on Thu Sep 15 22:49:07 2022
+# Load=23/8192=0%, Rehash=0, Collisions=0/30=0%
+# Finished Make data base on Sun Dec 11 01:18:07 2022
 
  
