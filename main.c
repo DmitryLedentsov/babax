@@ -15,41 +15,7 @@ enum render_constants{
 void render_body(SDL_Renderer* render, struct body* body){
     SDL_SetRenderDrawColor(render,255,0,0,0);
 }*/
-void render_body(SDL_Renderer* render, struct body* body){
-    int color = body->intersect? 255:200;
-    printf("%d", body->intersect);
-    SDL_SetRenderDrawColor(render,color,0,0,0);
-    int n = body->shape.n;
-    struct vec* transformed = body->shape.transformed_vertices;
-    struct vec rend [MAX_VERTICES];
 
-    SDL_RenderDrawPointF(render, body->position.x, body->position.y);
-    //struct vec* p = body.shape.transformed_vertices;
-    float x,y;
-    for(int i=0; i<n;i++){ 
-        struct vec* p = &transformed[i];
-        
-        x = p->x;
-        y = p->y;
-        //if(i==0) printf("%f %f \n", x, y);
-        rend[i] = *p;
-
-        //SDL_FillRect(screen_surface, &rect, SDL_MapRGB( screen_surface->format, 255, 0, 0));
-    }
-    transformed = rend;
-    SDL_RenderDrawLinesF( render, (const SDL_FPoint*) rend, n );
-    SDL_RenderDrawLineF(render, x,y, transformed[0].x, transformed[0].y);
-}
-void render_all(SDL_Renderer* render, struct body** bodies, int N){
-   
-    SDL_SetRenderDrawColor(render,0,0,0,0);
-    SDL_RenderClear(render);
-    SDL_SetRenderDrawColor(render,255,0,0,0);
-    for(int i=0;i<N;i++){
-        render_body(render, bodies[i]);
-    }
-	SDL_RenderPresent(render); 
-}
 
 
 int GetRandomValue(int min, int max){
@@ -70,9 +36,16 @@ int main (int argc, char ** args) {
     PhysicsBody floor = CreatePhysicsBodyRectangle(state,(Vector2){ SCREEN_WIDTH/2, SCREEN_HEIGHT }, 500, 100, 10);
     floor->enabled = false; // Disable body state to convert it to static (no dynamics, but collisions)
 
+    PhysicsBody c = CreatePhysicsBodyCircle(state,(Vector2){ SCREEN_WIDTH/2, SCREEN_HEIGHT/6 }, 45, 10);
+    c->enabled = true; // Disable body state to convert it to static (no dynamics, but collisions)
+    c->restitution = 1;
+    
+ 
     // Create obstacle circle physics body
     PhysicsBody circle = CreatePhysicsBodyCircle(state,(Vector2){ SCREEN_WIDTH/2, SCREEN_HEIGHT/2 }, 45, 10);
     circle->enabled = true; // Disable body state to convert it to static (no dynamics, but collisions)
+    circle->restitution = 1;
+    circle->velocity = (Vector2){0,-1};
     SetPhysicsGravity(state, 0,9);
     //SetPhysicsTimeStep(0.1);
 

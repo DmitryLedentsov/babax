@@ -26,7 +26,7 @@
 #define     BABAX_MAX_VERTICES             24
 #define     BABAX_CIRCLE_VERTICES          24
 
-#define     BABAX_COLLISION_ITERATIONS     100
+#define     BABAX_COLLISION_ITERATIONS     1000 //100
 #define     BABAX_PENETRATION_ALLOWANCE    0.05f
 #define     BABAX_PENETRATION_CORRECTION   0.4f
 
@@ -1038,8 +1038,7 @@ static void PhysicsStep(PhysicsState state)
     {
         PhysicsManifold manifold = state->contacts[i];
         
-        if (manifold != NULL)
-            InitializePhysicsManifolds(state, manifold);
+        if (manifold != NULL) InitializePhysicsManifolds(state, manifold);
     }
 
     // Integrate physics collisions impulses to solve collisions
