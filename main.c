@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "dimka_physx.h"
 #include "Babax.h"
 
 enum render_constants{
