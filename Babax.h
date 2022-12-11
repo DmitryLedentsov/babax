@@ -134,8 +134,6 @@ typedef struct {
     Vector2 gravityForce;              // Physics world gravity force
     PhysicsBody bodies[BABAX_MAX_BODIES];               // Physics bodies pointers array
     unsigned int physicsBodiesCount;                 // Physics world current bodies counter
-    PhysicsManifold contacts[BABAX_MAX_MANIFOLDS];      // Physics bodies pointers array
-    unsigned int physicsManifoldsCount;              // Physics world current manifolds counter
 
 }PhysicsStateData, *PhysicsState;
 
@@ -218,8 +216,7 @@ static PolygonData CreateRectanglePolygon(Vector2 pos, Vector2 size);           
 static void *PhysicsLoop(PhysicsState state,void *arg);                                                                        // Physics loop thread function
 static void PhysicsStep(PhysicsState state);                                                                              // Physics steps calculations (dynamics, collisions and position corrections)
 static int FindAvailableManifoldIndex(PhysicsState state);                                                                    // Finds a valid index for a new manifold initialization
-static PhysicsManifold CreatePhysicsManifold(PhysicsState state, PhysicsBody a, PhysicsBody b);                                 // Creates a new physics manifold to solve collision
-static void DestroyPhysicsManifold(PhysicsState state, PhysicsManifold manifold);                                               // Unitializes and destroys a physics manifold
+static PhysicsManifoldData CreatePhysicsManifold( PhysicsBody a, PhysicsBody b);                                 // Creates a new physics manifold to solve collision
 static void SolvePhysicsManifold(PhysicsManifold manifold);                                                 // Solves a created physics manifold between two physics bodies
 static void SolveCircleToCircle(PhysicsManifold manifold);                                                  // Solves collision between two circle shape physics bodies
 static void SolveCircleToPolygon(PhysicsManifold manifold);                                                 // Solves collision between a circle to a polygon shape physics bodies
@@ -227,7 +224,7 @@ static void SolvePolygonToCircle(PhysicsManifold manifold);                     
 static void SolveDifferentShapes(PhysicsManifold manifold, PhysicsBody bodyA, PhysicsBody bodyB);           // Solve collision between two different types of shapes
 static void SolvePolygonToPolygon(PhysicsManifold manifold);                                                // Solves collision between two polygons shape physics bodies
 static void IntegratePhysicsForces(PhysicsState state, PhysicsBody body);                                                       // Integrates physics forces into velocity
-static void InitializePhysicsManifolds(PhysicsState state, PhysicsManifold manifold);                                           // Initializes physics manifolds to solve collisions
+static void InitializePhysicsManifold(PhysicsState state, PhysicsManifold manifold);                                           // Initializes physics manifolds to solve collisions
 static void IntegratePhysicsImpulses(PhysicsManifold manifold);                                             // Integrates physics collisions impulses to solve collisions
 static void IntegratePhysicsVelocity(PhysicsState state,PhysicsBody body);                                                     // Integrates physics velocity into position and forces
 static void CorrectPhysicsPositions(PhysicsManifold manifold);                                              // Corrects physics bodies positions based on manifolds collision information
@@ -846,9 +843,7 @@ BABAXDEF void ClosePhysics(PhysicsState state)
 
 
     // Unitialize physics manifolds dynamic memory allocations
-    for (int i = state->physicsManifoldsCount - 1; i >= 0; i--)
-        DestroyPhysicsManifold(state, state->contacts[i]);
-
+   
     // Unitialize physics bodies dynamic memory allocations
     for (int i = state->physicsBodiesCount - 1; i >= 0; i--)
         DestroyPhysicsBody(state,state->bodies[i]);
@@ -856,8 +851,6 @@ BABAXDEF void ClosePhysics(PhysicsState state)
     #if defined(BABAX_DEBUG)
         if (state->physicsBodiesCount > 0 || state->usedMemory != 0)
             printf("[BABAX] physics module closed with %i still allocated bodies [MEMORY: %i bytes]\n", state->physicsBodiesCount, state->usedMemory);
-        else if (state->physicsManifoldsCount > 0 || state->usedMemory != 0)
-            printf("[BABAX] physics module closed with %i still allocated manifolds [MEMORY: %i bytes]\n", state->physicsManifoldsCount, state->usedMemory);
         else
             printf("[BABAX] physics module closed successfully\n");
     #endif
@@ -965,6 +958,16 @@ static void *PhysicsLoop(PhysicsState state, void *arg)
     return NULL;
 }
 
+inline static void ProcessManifold(PhysicsState state, PhysicsManifold manifold){
+    SolvePhysicsManifold(manifold);
+    InitializePhysicsManifold(state, manifold);
+    CorrectPhysicsPositions(manifold);
+    
+    for (int i = 0; i < BABAX_COLLISION_ITERATIONS; i++)
+    {
+        IntegratePhysicsImpulses(manifold); 
+    }
+}
 // Physics steps calculations (dynamics, collisions and position corrections)
 static void PhysicsStep(PhysicsState state)
 {
@@ -972,13 +975,6 @@ static void PhysicsStep(PhysicsState state)
     state->stepsCount++;
 
     // Clear previous generated collisions information
-    for (int i = state->physicsManifoldsCount - 1; i >= 0; i--)
-    {
-        PhysicsManifold manifold = state->contacts[i];
-        
-        if (manifold != NULL)
-            DestroyPhysicsManifold(state, manifold);
-    }
 
     // Reset physics bodies grounded state
     for (int i = 0; i < state->physicsBodiesCount; i++)
@@ -1003,21 +999,12 @@ static void PhysicsStep(PhysicsState state)
                     if ((bodyA->inverseMass == 0) && (bodyB->inverseMass == 0))
                         continue;
 
-                    PhysicsManifold manifold = CreatePhysicsManifold(state,bodyA, bodyB);
-                    SolvePhysicsManifold(manifold);
-
-                    if (manifold->contactsCount > 0)
-                    {
-                        // Create a new manifold with same information as previously solved manifold and add it to the manifolds pool last slot
-                        PhysicsManifold newManifold = CreatePhysicsManifold(state, bodyA, bodyB);
-                        newManifold->penetration = manifold->penetration;
-                        newManifold->normal = manifold->normal;
-                        newManifold->contacts[0] = manifold->contacts[0];
-                        newManifold->contacts[1] = manifold->contacts[1];
-                        newManifold->contactsCount = manifold->contactsCount;
-                        newManifold->restitution = manifold->restitution;
-                        newManifold->dynamicFriction = manifold->dynamicFriction;
-                        newManifold->staticFriction = manifold->staticFriction;
+                    PhysicsManifoldData manifold = CreatePhysicsManifold(bodyA, bodyB);
+                    PhysicsManifoldData manifold2 = manifold;
+                    bool flag = manifold.contactsCount > 0;
+                    ProcessManifold(state, &manifold);
+                    if(flag){
+                        ProcessManifold(state, &manifold2);
                     }
                 }
             }
@@ -1033,25 +1020,10 @@ static void PhysicsStep(PhysicsState state)
             IntegratePhysicsForces(state,body);
     }
 
-    // Initialize physics manifolds to solve collisions
-    for (int i = 0; i < state->physicsManifoldsCount; i++)
-    {
-        PhysicsManifold manifold = state->contacts[i];
-        
-        if (manifold != NULL) InitializePhysicsManifolds(state, manifold);
-    }
+
 
     // Integrate physics collisions impulses to solve collisions
-    for (int i = 0; i < BABAX_COLLISION_ITERATIONS; i++)
-    {
-        for (int j = 0; j < state->physicsManifoldsCount; j++)
-        {
-            PhysicsManifold manifold = state->contacts[i];
-            
-            if (manifold != NULL)
-                IntegratePhysicsImpulses(manifold);
-        }
-    }
+    //
 
     // Integrate velocity to physics bodies
     for (int i = 0; i < state->physicsBodiesCount; i++)
@@ -1063,13 +1035,6 @@ static void PhysicsStep(PhysicsState state)
     }
 
     // Correct physics bodies positions based on manifolds collision information
-    for (int i = 0; i < state->physicsManifoldsCount; i++)
-    {
-        PhysicsManifold manifold = state->contacts[i];
-        
-        if (manifold != NULL)
-            CorrectPhysicsPositions(manifold);
-    }
 
     // Clear physics bodies forces
     for (int i = 0; i < state->physicsBodiesCount; i++)
@@ -1113,113 +1078,38 @@ BABAXDEF void SetPhysicsTimeStep(PhysicsState state, double delta)
 }
 
 // Finds a valid index for a new manifold initialization
-static int FindAvailableManifoldIndex(PhysicsState state)
-{
-    int index = -1;
-    for (int i = 0; i < BABAX_MAX_MANIFOLDS; i++)
-    {
-        int currentId = i;
-
-        // Check if current id already exist in other physics body
-        for (int k = 0; k < state->physicsManifoldsCount; k++)
-        {
-            if (state->contacts[k]->id == currentId)
-            {
-                currentId++;
-                break;
-            }
-        }
-
-        // If it is not used, use it as new physics body id
-        if (currentId == i)
-        {
-            index = i;
-            break;
-        }
-    }
-
-    return index;
-}
 
 // Creates a new physics manifold to solve collision
-static PhysicsManifold CreatePhysicsManifold(PhysicsState state, PhysicsBody a, PhysicsBody b)
+static PhysicsManifoldData CreatePhysicsManifold(PhysicsBody a, PhysicsBody b)
 {
-    PhysicsManifold newManifold = (PhysicsManifold)BABAX_MALLOC(sizeof(PhysicsManifoldData));
-    state->usedMemory += sizeof(PhysicsManifoldData);
+    PhysicsManifoldData newManifold = {0};
 
-    int newId = FindAvailableManifoldIndex(state);
-    if (newId != -1)
-    {
+
+
         // Initialize new manifold with generic values
-        newManifold->id = newId;
-        newManifold->bodyA = a;
-        newManifold->bodyB = b;
-        newManifold->penetration = 0;
-        newManifold->normal = BABAX_VECTOR_ZERO;
-        newManifold->contacts[0] = BABAX_VECTOR_ZERO;
-        newManifold->contacts[1] = BABAX_VECTOR_ZERO;
-        newManifold->contactsCount = 0;
-        newManifold->restitution = 0.0f;
-        newManifold->dynamicFriction = 0.0f;
-        newManifold->staticFriction = 0.0f;
+        newManifold.id = 0;
+        newManifold.bodyA = a;
+        newManifold.bodyB = b;
+        newManifold.penetration = 0;
+        newManifold.normal = BABAX_VECTOR_ZERO;
+        newManifold.contacts[0] = BABAX_VECTOR_ZERO;
+        newManifold.contacts[1] = BABAX_VECTOR_ZERO;
+        newManifold.contactsCount = 0;
+        newManifold.restitution = 0.0f;
+        newManifold.dynamicFriction = 0.0f;
+        newManifold.staticFriction = 0.0f;
 
         // Add new body to bodies pointers array and update bodies count
-        state->contacts[state->physicsManifoldsCount] = newManifold;
-        state->physicsManifoldsCount++;
-    }
-    #if defined(BABAX_DEBUG)
-        else
-            printf("[BABAX] new physics manifold creation failed because there is any available id to use\n");
-    #endif
+        //state->contacts[state->physicsManifoldsCount] = newManifold;
+        //state->physicsManifoldsCount++;
+    
+
 
     return newManifold;
 }
 
 // Unitializes and destroys a physics manifold
-static void DestroyPhysicsManifold(PhysicsState state, PhysicsManifold manifold)
-{
-    if (manifold != NULL)
-    {
-        int id = manifold->id;
-        int index = -1;
 
-        for (int i = 0; i < state->physicsManifoldsCount; i++)
-        {
-            if (state->contacts[i]->id == id)
-            {
-                index = i;
-                break;
-            }
-        }
-
-        if (index == -1)
-        {
-            #if defined(BABAX_DEBUG)
-                printf("[BABAX] Not possible to manifold id %i in pointers array\n", id);
-            #endif
-            return;
-        }      
-
-        // Free manifold allocated memory
-        BABAX_FREE(manifold);
-        state->usedMemory -= sizeof(PhysicsManifoldData);
-        state->contacts[index] = NULL;
-
-        // Reorder physics manifolds pointers array and its catched index
-        for (int i = index; i < state->physicsManifoldsCount; i++)
-        {
-            if ((i + 1) < state->physicsManifoldsCount)
-                state->contacts[i] = state->contacts[i + 1];
-        }
-
-        // Update physics manifolds count
-        state->physicsManifoldsCount--;
-    }
-    #if defined(BABAX_DEBUG)
-        else
-            printf("[BABAX] error trying to destroy a null referenced manifold\n");
-    #endif
-}
 
 // Solves a created physics manifold between two physics bodies
 static void SolvePhysicsManifold(PhysicsManifold manifold)
@@ -1543,7 +1433,7 @@ static void IntegratePhysicsForces(PhysicsState state, PhysicsBody body)
 }
 
 // Initializes physics manifolds to solve collisions
-static void InitializePhysicsManifolds(PhysicsState state,PhysicsManifold manifold)
+static void InitializePhysicsManifold(PhysicsState state,PhysicsManifold manifold)
 {
     PhysicsBody bodyA = manifold->bodyA;
     PhysicsBody bodyB = manifold->bodyB;
