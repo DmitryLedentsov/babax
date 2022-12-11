@@ -46,6 +46,7 @@ int main (int argc, char ** args) {
     circle->enabled = true; // Disable body state to convert it to static (no dynamics, but collisions)
     circle->restitution = 1;
     circle->velocity = (Vector2){0,-1};
+    
     SetPhysicsGravity(state, 0,9);
     //SetPhysicsTimeStep(0.1);
 
