@@ -13,7 +13,7 @@ https://stackoverflow.com/questions/12671383/benefits-of-header-only-libraries
 у меня другой подход: после каждой итерации пользователю доступен список манифолдов с информацией о столкновениях, которые он сам может проверить в цикле и обработать.
 
 пример из демо: 
-'''
+```
 PhysicsStep(state);
 for (int i = 0; i < state->manifoldsCount; i++)
 {
@@ -28,7 +28,7 @@ for (int i = 0; i < state->manifoldsCount; i++)
         m.bodyA->velocity = m.normal;
     }
 }
-'''
+```
 
 
 планы:
