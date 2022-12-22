@@ -145,7 +145,6 @@ typedef struct PhysicsManifoldData
 typedef struct
 {
     unsigned int usedMemory;                            // Total allocated dynamic memory
-    bool physicsThreadEnabled;                          // Physics thread enabled state
     double baseTime;                                    // Offset time for MONOTONIC clock
     double startTime;                                   // Start time in milliseconds
     double deltaTime;                                   // Delta time used for physics steps, in milliseconds
@@ -289,10 +288,6 @@ BABAXDEF void InitPhysics(PhysicsState state)
 }
 
 // Returns true if physics thread is currently enabled
-BABAXDEF bool IsPhysicsEnabled(PhysicsState state)
-{
-    return state->physicsThreadEnabled;
-}
 
 // Sets physics global gravity force
 BABAXDEF void SetPhysicsGravity(PhysicsState state, float x, float y)
@@ -741,9 +736,7 @@ BABAXDEF void DestroyPhysicsBody(PhysicsState state, PhysicsBody body)
 // Unitializes physics pointers and exits physics loop thread
 BABAXDEF void ClosePhysics(PhysicsState state)
 {
-    // Exit physics loop thread
-    state->physicsThreadEnabled = false;
-
+ 
     // Unitialize physics manifolds dynamic memory allocations
 
     // Unitialize physics bodies dynamic memory allocations
@@ -849,13 +842,9 @@ static void *PhysicsLoop(PhysicsState state, void *arg)
 #endif
 
     // Initialize physics loop thread values
-    state->physicsThreadEnabled = true;
 
-    // Physics update loop
-    while (state->physicsThreadEnabled)
-    {
-        RunPhysicsStep(state);
-    }
+    RunPhysicsStep(state);
+    
 
     return NULL;
 }
