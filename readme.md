@@ -1,6 +1,8 @@
 # 2д библиотека физики
 special thanks to:
+https://github.com/Basmeuw/Profielwerkstuk
 https://github.com/RandyGaul/ImpulseEngine
+(честно не списывал отсюда)
 https://habr.com/ru/post/336908/
 https://github.com/c-krit/ferox/tree/main/ferox
 https://github.com/MarginallyClever/processingPhysics
