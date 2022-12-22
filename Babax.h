@@ -5,7 +5,7 @@
 
 // #define BABAX_STATIC
 
-// #define  BABAX_STANDALONE
+
 #define BABAX_DEBUG
 
 #if defined(BABAX_STATIC)
@@ -41,6 +41,7 @@
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
+
 // Vector2 type
 typedef struct Vector2
 {
@@ -57,7 +58,7 @@ typedef enum
 } bool;
 #define _STDBOOL_H
 #endif
-#endif
+
 
 typedef enum PhysicsBodyType
 {
@@ -101,7 +102,7 @@ typedef struct PhysicsShape
 typedef struct
 {
     float x1, y1, x2, y2;
-} AABB; //TODO: AAB check optimization
+} AABB;
 typedef struct PhysicsBodyData
 {
     unsigned int id;       // Reference unique identifier
@@ -1694,7 +1695,7 @@ static void MathNormalize(Vector2 *vector)
     vector->y *= ilength;
 }
 
-#if defined(BABAX_STANDALONE)
+
 // Returns the sum of two given vectors
 static inline Vector2 Vector2Add(Vector2 v1, Vector2 v2)
 {
@@ -1706,7 +1707,7 @@ static inline Vector2 Vector2Subtract(Vector2 v1, Vector2 v2)
 {
     return (Vector2){v1.x - v2.x, v1.y - v2.y};
 }
-#endif
+
 
 // Creates a matrix 2x2 from a given radians value
 static Mat2 Mat2Radians(float radians)
