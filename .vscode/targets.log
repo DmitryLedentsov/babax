@@ -1,20 +1,15 @@
 make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # GNU Make 4.3
- 
 # Built for x86_64-pc-cygwin
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sun Dec 11 01:18:07 2022
+# Make data base, printed on Fri Dec 23 00:31:43 2022
 
 # Variables
 
- 
-# environment
-FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -28,7 +23,7 @@ VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
 # environment
 LOCALAPPDATA = C:\Users\leden\AppData\Local
 # environment
-VSCODE_CWD = C:\Windows\system32
+VSCODE_CWD = C:\Users\leden\AppData\Local\Programs\Microsoft VS Code
 # environment
 SYSTEMROOT = C:\Windows
 # environment
@@ -40,9 +35,7 @@ MAKE_COMMAND := make
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\LOCAL\crashpad_51184_GGJPRNSNUUXBNKZK
-# environment
-FPS_BROWSER_USER_PROFILE_STRING = Default
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\LOCAL\crashpad_59012_TIXJSACWKVYUFYWH
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -54,7 +47,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\leden\AppData\Roaming\Code\CachedData\5235c6bb189b60b01b1f49062f4ffa42384f8c91
+VSCODE_CODE_CACHE_PATH = C:\Users\leden\AppData\Roaming\Code\CachedData\e8a3071ea4344d9d48ef8a4df2c097372b0c5161
 # environment
 LANG = C
 # default
@@ -70,7 +63,7 @@ MINGW = C:\Program Files\mingw-w64\x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin
 # environment
 ONEDRIVE = C:\Users\leden\OneDrive
 # makefile
-CURDIR := /cygdrive/c/Users/leden/OneDrive/C++/sdl_test
+CURDIR := /cygdrive/c/Users/leden/OneDrive/C++/babax
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # automatic
@@ -82,7 +75,7 @@ MFLAGS = -pqrR
 # default
 .SHELLFLAGS := -c
 # environment
-!C: = c:\Users\leden\OneDrive\C++\sdl_test
+!C: = c:\Users\leden\OneDrive\C++\babax
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # automatic
@@ -94,17 +87,15 @@ MAKEFILE_LIST := Makefile
 # environment
 GRAALVM_HOME = C:\graalvm
 # environment
-VSCODE_PID = 51184
+VSCODE_PID = 59012
 # environment
 CLION = C:\Program Files\JetBrains\CLion 2021.2.2\bin;
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 *F = $(notdir $*)
- 
 # environment
 CMAKE = C:\Program Files\CMake\bin\cmake.exe
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -202,7 +193,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = /cygdrive/c/Users/leden/AppData/Local/Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\c894135aeaf74602391a0ea81169cd32-1.74.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\c894135aeaf74602391a0ea81169cd32-1.74.2-main-sock
 # environment
 TERM = xterm-256color
 # default
@@ -226,7 +217,7 @@ WIX = C:\Program Files (x86)\WiX Toolset v3.11\
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 # variable set hash-table stats:
-# Load=105/1024=10%, Rehash=0, Collisions=13/135=10%
+# Load=103/1024=10%, Rehash=0, Collisions=12/133=9%
 
 # Pattern-specific Variable Values
 
@@ -234,9 +225,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 
 # Directories
 
-# . (device 2831518929, inode 5910974511172655): 19 files, no impossibilities.
+# . (device 2831518929, inode 5910974511172655): 16 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -244,7 +235,6 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 
 # Files
 
- 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
@@ -300,12 +290,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 23 / storage = 181 B / avg = 7 B
-# current buf: size = 8162 B / used = 181 B / count = 23 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 20 / storage = 138 B / avg = 6 B
+# current buf: size = 8162 B / used = 138 B / count = 20 / avg = 6 B
 
-# strcache performance: lookups = 30 / hit rate = 23%
+# strcache performance: lookups = 27 / hit rate = 25%
 # hash-table stats:
-# Load=23/8192=0%, Rehash=0, Collisions=0/30=0%
-# Finished Make data base on Sun Dec 11 01:18:07 2022
+# Load=20/8192=0%, Rehash=0, Collisions=0/27=0%
+# Finished Make data base on Fri Dec 23 00:31:43 2022
 
  

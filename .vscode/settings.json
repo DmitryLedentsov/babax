@@ -9,6 +9,11 @@
             "cwd": "c:\\Users\\leden\\OneDrive\\C++\\sdl_test",
             "binaryPath": "c:\\Users\\leden\\OneDrive\\C++\\sdl_test\\main",
             "binaryArgs": []
+        },
+        {
+            "cwd": "c:\\Users\\leden\\OneDrive\\C++\\babax",
+            "binaryPath": "c:\\Users\\leden\\OneDrive\\C++\\babax\\main",
+            "binaryArgs": []
         }
     ]
 }
