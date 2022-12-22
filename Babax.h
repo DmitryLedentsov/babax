@@ -36,13 +36,11 @@
 #define BABAX_MALLOC(size) malloc(size)
 #define BABAX_FREE(ptr) free(ptr)
 
-#define BABAX_STANDALONE
 #define BABAX_IMPLEMENTATION
 
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 //----------------------------------------------------------------------------------
-#if defined(BABAX_STANDALONE)
 // Vector2 type
 typedef struct Vector2
 {
@@ -103,7 +101,7 @@ typedef struct PhysicsShape
 typedef struct
 {
     float x1, y1, x2, y2;
-} AABB;
+} AABB; //TODO: AAB check optimization
 typedef struct PhysicsBodyData
 {
     unsigned int id;       // Reference unique identifier
@@ -145,7 +143,6 @@ typedef struct PhysicsManifoldData
 typedef struct
 {
     unsigned int usedMemory;                            // Total allocated dynamic memory
-    double baseTime;                                    // Offset time for MONOTONIC clock
     double startTime;                                   // Start time in milliseconds
     double deltaTime;                                   // Delta time used for physics steps, in milliseconds
     double currentTime;                                 // Current time in milliseconds

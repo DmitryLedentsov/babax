@@ -2,7 +2,7 @@
 special thanks to:
 https://github.com/Basmeuw/Profielwerkstuk
 https://github.com/RandyGaul/ImpulseEngine
-(честно не списывал отсюда)
+все формулы жестко списаны отсюда. я вообще хотел подумать над физической частью, но не судьба.
 https://habr.com/ru/post/336908/
 https://github.com/c-krit/ferox/tree/main/ferox
 https://github.com/MarginallyClever/processingPhysics
@@ -36,3 +36,5 @@ for (int i = 0; i < state->manifoldsCount; i++)
 
 планы:
 сделать биндинг для жавы(думаю как)
+оптимизировать проверку столкновений с помощью AABB 
+исправить добавление силы к телу.
